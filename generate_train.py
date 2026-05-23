@@ -2,13 +2,11 @@ import json
 import requests
 import random
 import os
-import tempfile
 from datasets import load_dataset
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from config import API_KEY, API_URL, OUTPUT_DIR, MODEL, MAX_TOKENS, TARGET_EXAMPLES, PARALLEL_WORKERS, SKILLS
 from prompts_skills import SKILL_PROMPTS
-
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -133,7 +131,7 @@ def annotate_message(message_data, skill_name, config):
             "raw_output":   content,
             "valid":        True,
         }
-    
+
     except Exception:
         return None
 
@@ -174,31 +172,6 @@ def annotate_all(messages, skill_name, config):
     return valid_results, invalid_results
 
 
-def convert_to_training_format(valid_results, skill_name, config):
-    training_examples = []
-    for result in valid_results:
-        training_examples.append({
-            "messages": [
-                {"role": "system",    "content": config["system_prompt"]},
-                {"role": "user",      "content": result["user_message"]},
-                {"role": "assistant", "content": json.dumps(result["annotation"], ensure_ascii=False)},
-            ]
-        })
-
-    random.shuffle(training_examples)
-    split_idx  = int(len(training_examples) * 0.9)
-    train_data = training_examples[:split_idx]
-    val_data   = training_examples[split_idx:]
-
-    out_dir = f"processed_data/{skill_name}"
-    os.makedirs(out_dir, exist_ok=True)
-    _save_jsonl(train_data, f"{out_dir}/train.jsonl")
-    _save_jsonl(val_data,   f"{out_dir}/val.jsonl")
-
-    print(f"  Train: {len(train_data)} | Val: {len(val_data)}")
-    return train_data, val_data
-
-
 def print_stats(valid_results, invalid_results, skill_name):
     total = len(valid_results) + len(invalid_results)
     rate  = len(valid_results) / total * 100 if total else 0
@@ -216,7 +189,7 @@ def _save_jsonl(data, filepath):
 
 
 if __name__ == "__main__":
-    print("Loading seed messages...")
+
     messages = load_seed_messages(target=TARGET_EXAMPLES + 2000)
 
     if len(messages) < 1000:
@@ -247,22 +220,9 @@ if __name__ == "__main__":
         # if True:
             valid_results, invalid_results = annotate_all(sampled, skill_name, config)
             print_stats(valid_results, invalid_results, skill_name)
-
-            train_data, val_data = convert_to_training_format(valid_results, skill_name, config)
-
-            all_metadata[skill_name] = {
-                "status":      "success",
-                "train_count": len(train_data),
-                "val_count":   len(val_data),
-                "train_file":  f"processed_data/{skill_name}/train.jsonl",
-                "val_file":    f"processed_data/{skill_name}/val.jsonl",
-            }
+            all_metadata[skill_name] = {"status": "success", "valid_count": len(valid_results)}
 
         except Exception as e:
             print("outer loop", e)
             all_metadata[skill_name] = {"status": "failed", "error": str(e)}
             continue
-
-    os.makedirs("processed_data", exist_ok=True)
-    with open("processed_data/metadata.json", "w", encoding="utf-8") as f:
-        json.dump(all_metadata, f, indent=2)

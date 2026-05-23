@@ -1,0 +1,72 @@
+{
+  "intent_understanding": {
+    "status": "success",
+    "train_count": 4613,
+    "val_count": 513,
+    "train_file": "processed_data/intent_understanding/train.jsonl",
+    "val_file": "processed_data/intent_understanding/val.jsonl"
+  },
+  "context_tracking": {
+    "status": "success",
+    "train_count": 1229,
+    "val_count": 137,
+    "train_file": "processed_data/context_tracking/train.jsonl",
+    "val_file": "processed_data/context_tracking/val.jsonl"
+  },
+  "tone_matching": {
+    "status": "success",
+    "train_count": 1178,
+    "val_count": 131,
+    "train_file": "processed_data/tone_matching/train.jsonl",
+    "val_file": "processed_data/tone_matching/val.jsonl"
+  },
+  "clarity": {
+    "status": "success",
+    "train_count": 2997,
+    "val_count": 333,
+    "train_file": "processed_data/clarity/train.jsonl",
+    "val_file": "processed_data/clarity/val.jsonl"
+  },
+  "dialogue": {
+    "status": "success",
+    "train_count": 1152,
+    "val_count": 128,
+    "train_file": "processed_data/dialogue/train.jsonl",
+    "val_file": "processed_data/dialogue/val.jsonl"
+  },
+  "empathy": {
+    "status": "success",
+    "train_count": 1544,
+    "val_count": 172,
+    "train_file": "processed_data/empathy/train.jsonl",
+    "val_file": "processed_data/empathy/val.jsonl"
+  },
+  "conciseness": {
+    "status": "success",
+    "train_count": 717,
+    "val_count": 80,
+    "train_file": "processed_data/conciseness/train.jsonl",
+    "val_file": "processed_data/conciseness/val.jsonl"
+  },
+  "structure": {
+    "status": "success",
+    "train_count": 672,
+    "val_count": 75,
+    "train_file": "processed_data/structure/train.jsonl",
+    "val_file": "processed_data/structure/val.jsonl"
+  },
+  "writing": {
+    "status": "success",
+    "train_count": 1783,
+    "val_count": 199,
+    "train_file": "processed_data/writing/train.jsonl",
+    "val_file": "processed_data/writing/val.jsonl"
+  },
+  "router": {
+    "status": "success",
+    "train_count": 4281,
+    "val_count": 476,
+    "train_file": "processed_data/router/train.jsonl",
+    "val_file": "processed_data/router/val.jsonl"
+  }
+}
