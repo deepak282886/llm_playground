@@ -14,7 +14,7 @@ BIG_MODELS = {
 
 JUDGE_MODEL = "openai/gpt-oss-20b"
 
-FINETUNED_DIR = "finetuned_models"
+FINETUNED_DIR = "finetuned_models_qwen"
 
 SKILLS = [
     "intent_understanding",

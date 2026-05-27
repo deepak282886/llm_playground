@@ -23,12 +23,12 @@ from unsloth import FastLanguageModel
 from trl import SFTTrainer, SFTConfig
 
 MODEL_NAME   = "unsloth/Qwen2.5-0.5B-Instruct"
-MAX_SEQ_LEN  = 2048
+MAX_SEQ_LEN  = 512 #2048 #512
 DTYPE        = None
 LOAD_4BIT    = True
 
-LORA_R       = 64
-LORA_ALPHA   = 128
+LORA_R       = 16#64 #16
+LORA_ALPHA   = 32 #128 #32
 LORA_DROPOUT = 0.05
 TARGET_MODULES = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
 
@@ -42,18 +42,7 @@ LOGGING_STEPS= 10
 SAVE_STEPS   = 500
 OUTPUT_DIR   = "finetuned_models_qwen"
 
-SKILLS = [
-    "intent_understanding",
-    "context_tracking",
-    "tone_matching",
-    "clarity",
-    "dialogue",
-    "empathy",
-    "conciseness",
-    "structure",
-    "writing",
-    "router",
-]
+from config import SKILLS
 
 
 def cleanup():
