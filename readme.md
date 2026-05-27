@@ -77,16 +77,6 @@ Config constants live in `config.py`. Skill prompts and validators live in `prom
 │       ├── train.jsonl
 │       └── val.jsonl
 ├── finetuned_models/
-│   └── qwen25-0.5b-<skill>-v2-merged/
-└── evaluation_results.json
+    └── qwen25-0.5b-<skill>-v2-merged/
 ```
 
-## Requirements
-
-```
-pip install unsloth trl transformers datasets requests together torch
-```
-
-## Results
-
-After evaluation, `evaluation_results.json` contains per-skill scores. The summary table shows how the 0.5B specialists compare against 7B and 20B generalists within the scope of each trained skill.
